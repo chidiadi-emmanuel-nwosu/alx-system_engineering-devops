@@ -16,9 +16,9 @@ case $1 in
 		;;
 	"restart")
 		kill manage_my_process
-		rm -f "/var/run/my_process.pid"
+		rm -f $FILE
 		./manage_my_process &
-		echo $! > "/var/run/my_process.pid"
+		echo "$!" > "$FILE"
 		echo "manage_my_process restarted"
 		;;
 	*)
