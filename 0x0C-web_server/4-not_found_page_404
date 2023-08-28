@@ -7,6 +7,9 @@
 # 404 error display
 echo "Ceci n'est pas une page" | sudo tee /etc/nginx/html/404.html
 
+# create the error file
+sudo mkdir /etc/nginx/html/
+
 # configure the server
 printf %s "server {
     listen 80;
