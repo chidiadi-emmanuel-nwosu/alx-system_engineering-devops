@@ -1,10 +1,23 @@
 #!/usr/bin/env bash
 # script that configure an Nginx server redirect_me
 
-./1-install_nginx_web_server
+# update package list
+sudo apt update
+
+# Install Nginx
+sudo apt install -y nginx
+
+# Create a retrun string "Hello World!" when quering
+echo "Hello World!" | sudo tee /var/www/html/index.nginx-debian.html
+
+# Configure Nginx to listen on port 80
+sudo sed -i 's/listen 80 default_server;/listen 80;/g' /etc/nginx/sites-available/default
+
+# configure redirect_me
 sudo sed -i '/location \/ {/a \
 \        location \/redirect_me {\
 \            return 301 https:\/\/example.com\/new_page;\
 \        }' /etc/nginx/sites-available/default
 
-service nginx start
+# restart nginx
+service nginx restart
