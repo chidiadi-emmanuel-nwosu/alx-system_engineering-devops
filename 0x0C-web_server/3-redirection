@@ -4,12 +4,17 @@
 # run bash script from task 1
 ./1-install_nginx_web_server
 
-# configure redirect_me
-url="https://www.youtube.com/watch?v=QH2-TGUlwu4"
-replace="location /redirect_me {\nreturn 301 $url;\n}"
-dest="/etc/nginx/sites-available/default"
+# configure the server
+printf %s "server {
+    listen 80;
+    listen [::]:80 default_server;
+    root   /etc/nginx/html;
+    index  index.html index.htm;
 
-sudo sed -i "s/server_name_;/server_name_;\n$replace" $dest
+    location /redirect_me {
+        return 301 https://www.youtube.com/watch?v=QH2-TGUlwu4;
+    }
+}" | sudo tee /etc/nginx/sites-available/default
 
 # restart nginx
 sudo service nginx restart
