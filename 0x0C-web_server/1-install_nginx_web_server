@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+# script that installs nginx on my server
+
+# update package list
+sudo apt update
+
+# Install Nginx
+sudo apt install -y nginx
+
+# Create a retrun string "Hello World!" when quering
+echo "Hello World!" | sudo tee /var/www/html/index.nginx-debian.html
+
+# Configure Nginx to listen on port 80
+sudo sed -i 's/listen 80 default_server;/listen 80;/g' /etc/nginx/sites-available/default
+
+# Restart nginx
+service nginx restart
