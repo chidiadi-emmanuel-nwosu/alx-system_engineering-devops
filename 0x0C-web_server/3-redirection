@@ -2,7 +2,7 @@
 # script that configure an Nginx server redirect_me
 
 # update package list
-sudo apt update
+sudo apt -y update
 
 # Install Nginx
 sudo apt install -y nginx
@@ -14,10 +14,7 @@ echo "Hello World!" | sudo tee /var/www/html/index.nginx-debian.html
 sudo sed -i 's/listen 80 default_server;/listen 80;/g' /etc/nginx/sites-available/default
 
 # configure redirect_me
-sudo sed -i 's/server_name_;/location \/ {/a \
-\        location \/redirect_me {\
-\            return 301 https:\/\/www.youtube.com\/watch?v=QH2-TGUlwu4;\
-\        }' /etc/nginx/sites-available/default
+sudo sed -i 's/server_name_;/server_name_;\nlocation \/redirect_me {\nreturn 301 https:\/\/www.youtube.com\/watch?v=QH2-TGUlwu4;\n}' /etc/nginx/sites-available/default
 
 # restart nginx
 sudo service nginx restart
