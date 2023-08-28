@@ -14,10 +14,10 @@ echo "Hello World!" | sudo tee /var/www/html/index.nginx-debian.html
 sudo sed -i 's/listen 80 default_server;/listen 80;/g' /etc/nginx/sites-available/default
 
 # configure redirect_me
-sudo sed -i '/location \/ {/a \
+sudo sed -i 's/server_name_;/location \/ {/a \
 \        location \/redirect_me {\
-\            return 301 https:\/\/example.com\/new_page;\
+\            return 301 https:\/\/www.youtube.com\/watch?v=QH2-TGUlwu4;\
 \        }' /etc/nginx/sites-available/default
 
 # restart nginx
-service nginx restart
+sudo service nginx restart
