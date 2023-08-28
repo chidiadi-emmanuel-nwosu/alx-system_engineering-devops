@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
-# script that configure an Nginx server so that
-# /redirect_me is redirecting to another page.
+# script that configure an Nginx server redirect_me
 
 ./1-install_nginx_web_server
 sudo sed -i '/location \/ {/a \
