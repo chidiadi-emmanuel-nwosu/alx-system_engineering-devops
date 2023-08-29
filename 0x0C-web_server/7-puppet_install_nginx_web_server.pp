@@ -24,7 +24,7 @@ exec { 'configure_server':
     	index  index.html index.htm;
 
     	location /redirect_me {
-            return 301 https://www.youtube.com/watch?v=QH2-TGUlwu4;
+            	return 301 https://www.youtube.com/watch?v=QH2-TGUlwu4;
     	}
     }' | sudo tee /etc/nginx/sites-available/default
   END
