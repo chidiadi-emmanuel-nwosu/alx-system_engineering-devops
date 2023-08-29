@@ -1,33 +1,34 @@
 # install and configure nginx using puppet
 
 # update the os packages
-exec { 'update':
-  command => 'sudo apt -y update',
+exec { 'install_nginx':
+  provider => shell,
+  command  => 'sudo apt -y update; sudo apt install -y nginx',
 }
 
-# install nginx
-exec { 'install_nginx':
-  command => 'sudo apt install -y nginx',
-}
 
 # create return string on query
 exec { 'create_return_string':
-  command => 'echo "Hello World!" | sudo tee /var/www/html/index.nginx-debian.html',
+  provider => shell,
+  command  => 'echo "Hello World!" | sudo tee /var/www/html/index.nginx-debian.html',
 }
 
 # make a html directory
 exec { 'mkdir_directoy':
-  command => 'sudo mkdir /etc/nginx/html/',
+  provider => shell,
+  command  => 'sudo mkdir /etc/nginx/html/',
 }
 
 # make a html directory
 exec { 'create_404_html':
-  command => 'echo "Ceci n\'est pas une page" | sudo tee /etc/nginx/html/404.html',
+  provider => shell,
+  command  => 'echo "Ceci n\'est pas une page" | sudo tee /etc/nginx/html/404.html',
 }
 
 # create the nginx configuration
 exec { 'configure_server':
-  command => '
+  provider => shell,
+  command  => '
 printf %s "server {
     listen 80;
     listen [::]:80 default_server;
@@ -48,5 +49,6 @@ printf %s "server {
 
 # restart nginx
 exec { 'restart_nginx':
-  command => 'sudo service nginx restart',
+  provider => shell,
+  command  => 'sudo service nginx restart',
 }
