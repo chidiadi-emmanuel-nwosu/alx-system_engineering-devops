@@ -6,7 +6,6 @@ exec { 'install_nginx':
   command  => 'sudo apt -y update; sudo apt install -y nginx',
 }
 
-
 # create return string on query
 exec { 'create_return_string':
   provider => shell,
@@ -17,7 +16,7 @@ exec { 'create_return_string':
 exec { 'configure_server':
   provider => shell,
   command  => @(END)
-    echo '
+    echo "
     server {
     	listen 80;
     	listen [::]:80 default_server;
@@ -25,10 +24,9 @@ exec { 'configure_server':
     	index  index.html index.htm;
 
     	location /redirect_me {
-        	return 301 https://www.youtube.com/watch?v=QH2-TGUlwu4;
+            return 301 https://www.youtube.com/watch?v=QH2-TGUlwu4;
     	}
-
-    }' | sudo tee /etc/nginx/sites-available/default'
+    }" | sudo tee /etc/nginx/sites-available/default
   END
 }
 
