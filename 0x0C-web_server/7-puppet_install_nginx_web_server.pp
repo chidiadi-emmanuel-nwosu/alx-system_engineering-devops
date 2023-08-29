@@ -16,18 +16,20 @@ exec { 'create_return_string':
 # create the nginx configuration
 exec { 'configure_server':
   provider => shell,
-  command  => '
-printf %s "server {
-    listen 80;
-    listen [::]:80 default_server;
-    root   /etc/nginx/html;
-    index  index.html index.htm;
+  command  => @(END)
+    echo '
+    server {
+    	listen 80;
+    	listen [::]:80 default_server;
+    	root   /etc/nginx/html;
+    	index  index.html index.htm;
 
-    location /redirect_me {
-        return 301 https://www.youtube.com/watch?v=QH2-TGUlwu4;
-    }
+    	location /redirect_me {
+        	return 301 https://www.youtube.com/watch?v=QH2-TGUlwu4;
+    	}
 
-}" | sudo tee /etc/nginx/sites-available/default',
+    }' | sudo tee /etc/nginx/sites-available/default'
+  END
 }
 
 # restart nginx
