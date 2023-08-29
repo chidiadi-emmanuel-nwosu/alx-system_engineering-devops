@@ -1,13 +1,28 @@
 # install and configure nginx using puppet
 
 # update the os packages
-class { 'apt':
-  update_cache => True,
+exec { 'update':
+  command => 'sudo apt -y update',
 }
 
 # install nginx
-package { 'nginx':
-  ensure => installed,
+exec { 'install_nginx':
+  command => 'sudo apt install -y nginx',
+}
+
+# create return string on query
+exec { 'create_return_string':
+  command => 'echo "Hello World!" | sudo tee /var/www/html/index.nginx-debian.html',
+}
+
+# make a html directory
+exec { 'mkdir_directoy':
+  command => 'sudo mkdir /etc/nginx/html/',
+}
+
+# make a html directory
+exec { 'create_404_html':
+  command => 'echo "Ceci n\'est pas une page" | sudo tee /etc/nginx/html/404.html',
 }
 
 # create the nginx configuration
@@ -29,26 +44,9 @@ printf %s "server {
       internal;      
     }
 }" | sudo tee /etc/nginx/sites-available/default',
-
-  require => File['/etc/nginx/sites-available/default'],
-  notify  => Service['nginx'],
 }
 
-exec { 'create_index_html':
-  command => 'echo "Hello World!" | sudo tee /var/www/html/index.nginx-debian.html',
-  creates => '/var/www/html/index.nginx-debian.html',
-  notify  => Service['nginx'],
-}
-
-exec { 'create_404_html':
-  command => 'echo "Ceci n\'est pas une page" | sudo tee /etc/nginx/html/404.html',
-  creates => '/etc/nginx/html/404.html',
-  require => File['/etc/nginx/sites-available/default'],
-  notify  => Service['nginx'],
-}
-
-service { 'nginx':
-  ensure  => running,
-  enable  => true,
-  require => Package['nginx']
+# restart nginx
+exec { 'restart_nginx':
+  command => 'sudo service nginx restart',
 }
