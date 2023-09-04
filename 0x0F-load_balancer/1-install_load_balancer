@@ -7,8 +7,11 @@ sudo apt install software-properties-common
 # install HAproxy dependencies
 sudo add-apt-repository -y ppa:vbernat/haproxy-2.0
 
-# update and install HAproxy
-sudo apt update; sudo apt insatll -y haproxy
+# update package list
+sudo apt -y update
+
+# Install Nginx
+sudo apt install -y haproxy
 
 # configure the HAproxy
 printf %s "
