@@ -2,7 +2,7 @@
 # script that configure an Nginx server redirect_me
 
 # update package list
-sudo apt -y update
+sudo apt update
 
 # Install Nginx
 sudo apt install -y nginx
@@ -10,11 +10,8 @@ sudo apt install -y nginx
 # Create a retrun string "Hello World!" when quering
 echo "Hello World!" | sudo tee /var/www/html/index.nginx-debian.html
 
-# Configure Nginx to listen on port 80
-sudo sed -i 's/listen 80 default_server;/listen 80;/g' /etc/nginx/sites-available/default
-
 # create the error file
-sudo mkdir /etc/nginx/html/
+sudo mkdir -p /etc/nginx/html/
 
 # 404 error display
 echo "Ceci n'est pas une page" | sudo tee /etc/nginx/html/404.html
