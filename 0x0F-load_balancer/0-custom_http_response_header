@@ -2,7 +2,7 @@
 # script that configure an Nginx server redirect_me
 
 # update package list
-sudo apt update
+sudo apt -y update
 
 # Install Nginx
 sudo apt install -y nginx
@@ -17,8 +17,8 @@ sudo mkdir -p /etc/nginx/html/
 echo "Ceci n'est pas une page" | sudo tee /etc/nginx/html/404.html
 
 # configure the server
-printf %s "server {
-    listen 80;
+echo "server {
+    listen 80 default_server;
     listen [::]:80 default_server;
     root   /etc/nginx/html;
     index  index.html index.htm;
@@ -39,4 +39,4 @@ printf %s "server {
 }" | sudo tee /etc/nginx/sites-available/default
 
 # restart nginx
-sudo service nginx restart
+sudo service nginx start
