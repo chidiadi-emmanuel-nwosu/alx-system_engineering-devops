@@ -1,60 +1,66 @@
-# install and configure nginx using puppet
+# Install and configure Nginx using Puppet
 
-# update the os packages
-exec { 'install_nginx':
+# Update the OS packages
+exec { 'update_packages':
   provider => shell,
-  command  => 'sudo apt -y update; sudo apt install -y nginx',
+  command  => 'sudo apt -y update',
 }
 
-# create return string on query
-exec { 'create_return_string':
-  provider => shell,
-  command  => 'echo "Hello World!" | sudo tee /var/www/html/index.nginx-debian.html',
+# Install Nginx
+package { 'nginx':
+  ensure  => 'installed',
+  require => Exec['update_packages'],
 }
 
-# create the error file
-exec { 'create_error_file':
-  provider => shell,
-  command  => 'sudo mkdir -p /etc/nginx/html/ ; echo "Ceci n\'est pas une page" | sudo tee /etc/nginx/html/404.html',
+# Create a return string for queries
+file { '/var/www/html/index.nginx-debian.html':
+  ensure  => 'present',
+  content => 'Hello World!',
+  require => Package['nginx'],
 }
 
-# create the nginx configuration
-exec { 'configure_server':
-  provider => shell,
-  command  => @(END)
-    echo '
+# Create the error file
+file { '/etc/nginx/html/404.html':
+  ensure  => 'present',
+  content => 'Ceci n\'est pas une page',
+  require => Package['nginx'],
+}
+
+# Configure the Nginx server
+file { '/etc/nginx/sites-available/default':
+  ensure  => 'present',
+  content => '
     server {
         listen 80 default_server;
         listen [::]:80 default_server;
-	root /var/www/html;
-	index index.html index.htm index.nginx-debian.html;
+        root /var/www/html;
+        index index.html index.htm index.nginx-debian.html;
 
-	server_name _;
+        server_name _;
 
-	add_header X-Served-By $HOSTNAME;
+        add_header X-Served-By "$::hostname";
 
-	location / {
-		# First attempt to serve request as file, then
-		# as directory, then fall back to displaying a 404.
-		try_files $uri $uri/ =404;
-	}
+        location / {
+            # First attempt to serve request as file, then
+            # as directory, then fall back to displaying a 404.
+            try_files $uri $uri/ =404;
+        }
         location /redirect_me {
-        	return 301 https://www.youtube.com/watch?v=QH2-TGUlwu4;
+            return 301 https://www.youtube.com/watch?v=QH2-TGUlwu4;
         }
 
-	error_page 404 /404.html;
-	location /404 {
-		root /etc/nginx/html;
-		internal;      
-	}
-
-
-    }' | sudo tee /etc/nginx/sites-available/default
-  END
+        error_page 404 /404.html;
+        location /404 {
+            root /etc/nginx/html;
+            internal;      
+        }
+    }',
+  require => File['/etc/nginx/html/404.html'],
 }
 
-# restart nginx
-exec { 'restart_nginx':
-  provider => shell,
-  command  => 'sudo service nginx restart',
+# Restart Nginx
+service { 'nginx':
+  ensure    => 'running',
+  enable    => true,
+  subscribe => File['/etc/nginx/sites-available/default'],
 }
