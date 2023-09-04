@@ -25,7 +25,7 @@ backend servers
 	server 302036-web-01 54.236.49.90:80 check
 	server 302036-web-02 54.175.111.155:80 check
 
-" | sudo tee -a /etc/haproxy/haproxy.cfg > /dev/null
+" | sudo tee /etc/haproxy/haproxy.cfg
 
 # start HAproxy
 sudo service start haproxy
