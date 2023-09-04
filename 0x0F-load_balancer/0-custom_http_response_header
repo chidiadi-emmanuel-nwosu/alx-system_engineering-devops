@@ -13,11 +13,11 @@ echo "Hello World!" | sudo tee /var/www/html/index.nginx-debian.html
 # Configure Nginx to listen on port 80
 sudo sed -i 's/listen 80 default_server;/listen 80;/g' /etc/nginx/sites-available/default
 
-# 404 error display
-echo "Ceci n'est pas une page" | sudo tee /etc/nginx/html/404.html
-
 # create the error file
 sudo mkdir /etc/nginx/html/
+
+# 404 error display
+echo "Ceci n'est pas une page" | sudo tee /etc/nginx/html/404.html
 
 # configure the server
 printf %s "server {
