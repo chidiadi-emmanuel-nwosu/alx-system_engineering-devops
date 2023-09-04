@@ -26,4 +26,4 @@ backend servers
 " | sudo tee -a /etc/haproxy/haproxy.cfg
 
 # start HAproxy
-sudo service start haproxy
+sudo service haproxy restart
