@@ -12,6 +12,12 @@ exec { 'create_return_string':
   command  => 'echo "Hello World!" | sudo tee /var/www/html/index.nginx-debian.html',
 }
 
+# create the error file
+exec { 'create_error_file':
+  provider => shell,
+  command  => 'sudo mkdir -p /etc/nginx/html/ ; echo "Ceci n\'est pas une page" | sudo tee /etc/nginx/html/404.html',
+}
+
 # create the nginx configuration
 exec { 'configure_server':
   provider => shell,
