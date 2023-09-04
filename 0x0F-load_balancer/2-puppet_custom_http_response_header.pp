@@ -18,7 +18,7 @@ exec { 'configure_server':
   command  => @(END)
     echo '
     server {
-        listen 80;
+        listen 80 default_server;
         listen [::]:80 default_server;
 	root /var/www/html;
 	index index.html index.htm index.nginx-debian.html;
