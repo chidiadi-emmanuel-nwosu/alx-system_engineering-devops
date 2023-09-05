@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+# script for debugging a websever
+
+sed -i 's/listen 8080 default_server;/listen 8080 default_server;/' /etc/nginx/sites-enabled/default
+sed -i 's/listen \[::\]:8080 default_server ipv6only=on;/listen \[::\]:80 default_server ipv6only=on;/' /etc/nginx/sites-enabled/default
