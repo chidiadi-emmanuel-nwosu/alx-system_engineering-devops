@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+# script that will display information about subdomains.
+
+# check for arguments
+if [ $# -lt 1 ]
+then
+	exit 1
+fi
+
+# display dns records
+display() {
+	local subdomain="$1"
+	local record="$2"
+	local dest_ip="$3"
+
+	echo "The subdomain $subdomain is a $record record and points to $dest_ip"
+}
+
+# command line arguments
+domain=$1
+
+# check cases
+if [ $# -eq 1 ]
+then
+	# declare default subdomains
+	default=("www" "lb-01" "web-01" "web-02")
+
+	for sub in "${default[@]}";
+	do
+		ip=$(dig +short "$sub.$domain")
+		record=$(dig "$sub.$domain" | grep "$sub.$domain" | awk -F ' ' '{ print $4 }' | tail -1)
+		display "$sub" "$record" "$ip"
+	done
+else
+	sub=$2
+	ip=$(dig +short "$sub.$domain")
+	record=$(dig "$sub.$domain" | grep "$sub.$domain" | awk -F ' ' '{ print $4 }' | tail -1)
+	display "$sub" "$record" "$ip"
+fi
