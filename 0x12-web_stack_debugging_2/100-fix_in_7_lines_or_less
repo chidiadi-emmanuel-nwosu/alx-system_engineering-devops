@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # script that configures the container to fit specific requirements
-sed -i 's/80 default_server/8080 default_server/g' /etc/nginx/sites-available/default
+sed -i 's/80/8080/g' /etc/nginx/sites-available/default
 chown nginx:nginx /etc/nginx/nginx.conf
 chown 777 /etc/nginx/nginx.conf
 pkill -9 apache2
