@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # script that configures the container to fit specific requirements
-pkill -f apache2
+pkill apache2
 sed -i 's/#user nginx/user nginx/' /etc/nginx/nginx.conf
 sed -i 's/80 default_server/8080 default_server/g' /etc/nginx/sites-available/default
 chown nginx:nginx /etc/nginx/nginx.conf
