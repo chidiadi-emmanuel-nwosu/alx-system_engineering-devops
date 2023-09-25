@@ -33,9 +33,11 @@ if __name__ == "__main__":
 
     json_content = {}
     json_content[f'{employee_id}'] = [
-        {'task': todo['title'],
-         'completed': todo['completed'],
-         'username': username}
+        {
+            'task': todo['title'],
+            'completed': todo['completed'],
+            'username': username
+        }
         for todo in todos
     ]
 
