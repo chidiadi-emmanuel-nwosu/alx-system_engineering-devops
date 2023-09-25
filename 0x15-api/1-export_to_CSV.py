@@ -1,8 +1,8 @@
 #!/usr/bin/python3
 """script to export API data in the CSV format."""
+import csv
 import requests
 from sys import argv, exit
-import csv
 
 
 if __name__ == "__main__":

@@ -30,7 +30,7 @@ if __name__ == "__main__":
     employee_name = list(filter(lambda x: x['id'] == employee_id, users))
 
     print(
-        f"Employee {employee_name[0]['name']} is done with"
+        f"Employee {employee_name[0]['name']} is done with "
         f"tasks({len(jobs_done)}/{len(todos)}):"
     )
 
