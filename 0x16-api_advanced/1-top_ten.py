@@ -15,7 +15,7 @@ def top_ten(subreddit):
     headers = {'User-Agent': 'Mozilla/5.0'}
     params = {
             'allow_redirects': False,
-            'limit': 9
+            'limit': 10
             }
     response = requests.get(url, headers=headers, params=params)
 
@@ -25,7 +25,7 @@ def top_ten(subreddit):
         # print(len(data['data']))
         # print(json.dumps(data, indent=4))
 
-        for titles in data['data']['children']:
-            print(titles.get('data').get('title'))
+        for posts in data['data']['children']:
+            print(posts.get('data').get('title'))
     else:
         print(None)
