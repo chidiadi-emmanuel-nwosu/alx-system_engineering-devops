@@ -12,16 +12,14 @@ def top_ten(subreddit):
     import json
 
     url = "https://www.reddit.com/r/{}/hot.json".format(subreddit)
-    headers = {'User-Agent': 'Mozilla/5.0', 'allow_redirects': 'False'}
-    params = {'limit': 9}
+    headers = {'User-Agent': 'Mozilla/5.0', 'allow_redirects': 'false'}
+    params = {'limit': 10}
     response = requests.get(url, headers=headers, params=params)
 
     if response.status_code == 200:
-        data = response.json()
+        posts = response.json().get('data')
 
-        # print(len(data['data']))
-        # print(json.dumps(data, indent=4))
-        for posts in data['data']['children']:
-            print(posts.get('data').get('title'))
+        for post in posts.get('children'):
+            print(post.get('data', None).get('title', None))
     else:
         print(None)
