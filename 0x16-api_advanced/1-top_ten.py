@@ -24,8 +24,8 @@ def top_ten(subreddit):
 
         # print(len(data['data']))
         # print(json.dumps(data, indent=4))
-
-        for posts in data['data']['children']:
-            print(posts.get('data').get('title'))
+        if 'data' in data and 'children' in data['data']:
+            for posts in data['data']['children']:
+                print(posts.get('data').get('title'))
     else:
         print(None)
