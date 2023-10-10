@@ -9,7 +9,6 @@ def top_ten(subreddit):
        subreddit.
     """
     import requests
-    import json
 
     url = "https://www.reddit.com/r/{}/hot.json".format(subreddit)
     headers = {'User-Agent': 'Mozilla/5.0'}
